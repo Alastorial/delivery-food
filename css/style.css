@@ -410,7 +410,7 @@ header {
 }
 
 .modal-body {
-  margin-bottom: 52px;
+  margin-bottom: 32px;
 }
 
 .footer-buttons {
@@ -596,13 +596,34 @@ header {
     font-size: 17px;
   }
   .button-card-text {
-    /* flex-wrap: wrap; */
     line-height: 23px;
     font-size: 20px;
   }
   .card-price-bold {
     font-size: 18px;
     margin-left: auto;
+  }
+  .food-name {
+    font-size: 15px;
+  }
+  .food-price {
+    font-size: 18px;
+    margin-left: 8px;
+  }
+  .food-row {
+    display: flex;
+    align-items: center;
+  }
+  .modal-pricetag {
+    font-size: 15px;
+    line-height: 19px;
+    padding: 10px 15px;
+    line-height: 23px;
+  }
+  .button-primary {
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 14px;
   }
 }
 
@@ -641,5 +662,37 @@ header {
   }
   .footer-link:not(:last-child) {
     margin-right: 0;
+  }
+  .food-name {
+    font-size: 15px;
+  }
+  .food-price {
+    font-size: 18px;
+    margin-left: 8px;
+  }
+  .food-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .button-card-text {
+    line-height: 23px;
+    font-size: 15px;
+  }
+  .card-price-bold {
+    font-size: 18px;
+    margin-left: auto;
+  }
+
+  .modal-pricetag {
+    font-size: 15px;
+    line-height: 19px;
+    padding: 10px 15px;
+    line-height: 23px;
+  }
+  .button-primary {
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 14px;
   }
 }
