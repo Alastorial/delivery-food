@@ -441,6 +441,7 @@ button {
   background: rgba(0, 0, 0, 0.4);
   display: none;
   z-index: 999;
+  overflow: auto;
 }
 
 .modal-auth {
@@ -815,6 +816,8 @@ button {
   .button {
     min-height: 40px;
     padding: 5px 12px;
+    font-size: 15px;
+    line-height: 14px;
   }
 
   .button-out-svg {
@@ -854,5 +857,9 @@ button {
 
   .footer-link:not(:last-child) {
     margin-right: 0;
+  }
+  .modal-pricetag {
+    font-size: 14px;
+    line-height: 9px;
   }
 }
