@@ -156,7 +156,7 @@ function createCardRestaurant(restaurant) {
     // console.log(timeOfDelivery)
 
   const card = `
-    <a class="card card-restaurant wow animate__animated " data-products="${products}">
+    <a class="card card-restaurant  animate__animated animate__fadeInUP" data-products="${products}">
       <img src="${image}" alt="image" class="card-image"/>
       <div class="card-text">
         <div class="card-heading">
