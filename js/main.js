@@ -66,6 +66,7 @@ function authorized() {
 
   // Функция запускающаяся при попытке деавторизироваться
   function logOut() {
+    cart.length = 0 // Чистим корзину
     login = '' // Чистим логин
     localStorage.removeItem('delivery'); // Удаляем логин из памяти браузера
     buttonAuth.style.display = ''; // Убираем стили, которые показывали/скрывали блоки с кнопками и логин
@@ -265,13 +266,15 @@ function openGoods(event) {
 // Функция добавления в корзину
 function addToCart(event) {
 
-  if (login) {
+  
 
-    const target = event.target;
+  const target = event.target;
 
-    const buttonAddToCart = target.closest('.button-add-cart'); // Кладем в buttonAddToCart код кнопки, если попали по ней
+  const buttonAddToCart = target.closest('.button-add-cart'); // Кладем в buttonAddToCart код кнопки, если попали по ней
 
-    if (buttonAddToCart) { // Если попали по кнопке, то в переменной buttonAddToCart что-то есть и выполняется условие
+  if (buttonAddToCart) { // Если попали по кнопке, то в переменной buttonAddToCart что-то есть и выполняется условие
+    
+    if (login) {
       const card = target.closest('.card'); // Получаем всю карточку
       const title = card.querySelector('.card-title-reg').textContent; // Получаем всю карточку
       const cost = card.querySelector('.card-price').textContent; // Получаем название блюда
@@ -293,12 +296,12 @@ function addToCart(event) {
         });
       };
 
-      
+    } else {
+        toggleModalAuth();
+      };
 
-    };
-  } else {
-      toggleModalAuth();
-    };
+  };
+  
 
 };
 
