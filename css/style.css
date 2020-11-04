@@ -282,6 +282,15 @@ fieldset {
   background-color: #fff1b8;
 }
 
+.index {
+  font-size: 11px;
+  background-color: #e11624;
+  border-radius: 60px;
+  line-height: 19px;
+  width: 19px;
+  color: white;
+}
+
 .card-restaurant {
   cursor: pointer;
 }

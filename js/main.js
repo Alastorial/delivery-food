@@ -307,13 +307,15 @@ function updateCartPossitionsCount() {
   cartButton.innerHTML = ''
   if (cart.length) {
     cartButton.insertAdjacentHTML('beforeend', `
-  <span class="button-cart-svg"></span>
-  <span class="button-text">Корзина (${cart.length})</span>
-  `);
-  } else {
-    cartButton.insertAdjacentHTML('beforeend', `
+      <span class="index">${cart.length}</span>
     <span class="button-cart-svg"></span>
     <span class="button-text">Корзина</span>
+    `);
+  } else {
+    cartButton.insertAdjacentHTML('beforeend', `
+    
+      <span class="button-cart-svg"></span>
+      <span class="button-text">Корзина</span>
   `);
   }
 
