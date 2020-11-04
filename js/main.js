@@ -89,6 +89,8 @@ function authorized() {
     localStorage.removeItem('cartTitleData');
     localStorage.removeItem('cartCostData');
     localStorage.removeItem('cartIdData');
+    updateCartPossitionsCount();
+
 
     checkAuth(); // Запускаем проверку авторизации
   }
@@ -284,6 +286,8 @@ function changeCount(event) {
      food.count++;
     }
 
+    updateCartPossitionsCount();
+
     localStorage.setItem("cartData", JSON.stringify(cart)); // Обновление в памяти браузера значения корзины
 
     renderCart();
@@ -295,6 +299,26 @@ function changeCount(event) {
 
 };
 
+
+
+
+// Моя вторая функция, которая отслеживает и обновляет индекс рядом с кнопкой "В корзину" у шапки
+function updateCartPossitionsCount() {
+  cartButton.innerHTML = ''
+  if (cart.length) {
+    cartButton.insertAdjacentHTML('beforeend', `
+  <span class="button-cart-svg"></span>
+  <span class="button-text">Корзина (${cart.length})</span>
+  `);
+  } else {
+    cartButton.insertAdjacentHTML('beforeend', `
+    <span class="button-cart-svg"></span>
+    <span class="button-text">Корзина</span>
+  `);
+  }
+
+  
+};
 
 
 
@@ -335,6 +359,8 @@ function init(){
   });
 
 
+  updateCartPossitionsCount();
+
   // При нажатии на корзину
   cartButton.addEventListener("click", function() {  
     renderCart();
@@ -347,6 +373,7 @@ function init(){
     cart.length = 0;
     localStorage.removeItem('cartData');
     renderCart();
+    updateCartPossitionsCount();
   })
 
   // При попытке заказать

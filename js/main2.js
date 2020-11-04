@@ -28,6 +28,7 @@ const buttonClearCart = document.querySelector('.clear-cart');
 const mainFooter = document.querySelector('.footer');
 const emptyCart = document.querySelector('.emptyCart'); // Текст о пустой корзине
 const buy = document.querySelector('.button-buy'); // Кнопка оформить заказ
+const buttonCart = document.querySelector('.button-cart');
 
 
 
@@ -98,6 +99,7 @@ function authorized() {
     localStorage.removeItem('cartCostData');
     localStorage.removeItem('cartIdData');
     updateButtonCartCount();
+    updateCartPossitionsCount();
 
     checkAuth(); // Запускаем проверку авторизации
   }
@@ -158,7 +160,9 @@ function notAuthorized() {
             });
           };
 
-          updateButtonCartCount();
+        updateButtonCartCount();
+        updateCartPossitionsCount();
+
         localStorage.setItem("cartData", JSON.stringify(cart)); // Передаем в cartData нашу новую корзину
       }
       
@@ -233,7 +237,6 @@ function createCardFood({ description, image, name, price, id }) { // Второ
 
 // Функция загрузки ресторана
 const openGoods = function() {
-  
   cardsMenu.textContent = ''; // Очищаем меню с едой
   containerPromo.classList.add('hide'); // Убираем блок с промо
   menu.classList.remove('hide'); // Показываем блок с едой
@@ -287,12 +290,6 @@ function addToCart(event) {
 
       if (food) {  // Если в food что-то есть, то прибавляем 1 к индексу количества данного блюда в корзине
         food.count += 1
-
-        // Обновляем счетчик рядом с кнопкой корзины
-        buttonAddToCart.insertAdjacentHTML('afterbegin', `
-          <span class="button-card-text">В корзину</span>
-          <span class="button-cart-svg"></span>
-          <span class="button-cart-сcounter">${food.count}</span>`)
           
       } else { // Иначе добавляем его
           cart.push({
@@ -301,22 +298,17 @@ function addToCart(event) {
           cost,
           count: 1
         });
-
-        // Обновляем счетчик рядом с кнопкой корзины
-        buttonAddToCart.insertAdjacentHTML('afterbegin', `
-          <span class="button-card-text">В корзину</span>
-          <span class="button-cart-svg"></span>
-          <span class="button-cart-сcounter">1</span>`)
+        
       };
       
-      
-      
+      updateButtonCartCount(); // Обновляем счетчик рядом с кнопкой корзины блюда
 
+      updateCartPossitionsCount(); // Обновляем счетчик рядом с кнопкой корзины шапки
 
       localStorage.setItem("cartData", JSON.stringify(cart));
       
 
-    } else {
+    } else { // Иначе кладем в браузер данные выбранной карточки и запускаем авторизацию
         localStorage.setItem('cartTitleData', card.querySelector('.card-title-reg').textContent);
         localStorage.setItem('cartCostData', card.querySelector('.card-price').textContent);
         localStorage.setItem('cartIdData', buttonAddToCart.id);
@@ -326,7 +318,6 @@ function addToCart(event) {
 
   };
   
-
 };
 
 
@@ -397,6 +388,7 @@ function changeCount(event) {
 
     renderCart();
     updateButtonCartCount();
+    updateCartPossitionsCount();
 
 
   }
@@ -408,7 +400,7 @@ function changeCount(event) {
 
 
 
-// Моя первая функция, которая отслеживает индексы рядом с кнопками "В корзину"
+// Моя первая функция, которая отслеживает и обновляет индексы рядом с кнопками "В корзину" у блюд
 function updateButtonCartCount() {
   const cartCounter = document.querySelectorAll(".button-add-cart"); // Кладем все элементы с таким классом и перебираем
   cartCounter.forEach(function(button) {
@@ -437,9 +429,26 @@ function updateButtonCartCount() {
 
 
   })
-}
+};
 
 
+// Моя вторая функция, которая отслеживает и обновляет индекс рядом с кнопкой "В корзину" у шапки
+function updateCartPossitionsCount() {
+  cartButton.innerHTML = ''
+  if (cart.length) {
+    cartButton.insertAdjacentHTML('beforeend', `
+  <span class="button-cart-svg"></span>
+  <span class="button-text">Корзина (${cart.length})</span>
+  `);
+  } else {
+    cartButton.insertAdjacentHTML('beforeend', `
+    <span class="button-cart-svg"></span>
+    <span class="button-text">Корзина</span>
+  `);
+  }
+
+  
+};
 
 
 // Функция генерации футера
@@ -475,7 +484,7 @@ function init(){
 
   openGoods();
 
-
+  updateCartPossitionsCount();
   // При нажатии на корзину
   cartButton.addEventListener("click", function() {  
     renderCart();
@@ -487,6 +496,7 @@ function init(){
     cart.length = 0;
     localStorage.removeItem('cartData');
     updateButtonCartCount();
+    updateCartPossitionsCount();
     renderCart();
   })
 
