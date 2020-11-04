@@ -156,7 +156,7 @@ function notAuthorized() {
             });
           };
 
-
+          updateButtonCartCount();
         localStorage.setItem("cartData", JSON.stringify(cart)); // Передаем в cartData нашу новую корзину
       }
       
