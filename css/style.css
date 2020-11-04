@@ -4,7 +4,7 @@
 
 body {
   font-family: "Roboto", sans-serif; /* Шрифт */
-  padding-top: 44px; /* Отступ сверху */
+  /* padding-top: 44px; /* Отступ сверху */
 }
 
 a,
@@ -30,6 +30,7 @@ button {
 }
 
 .header {
+  margin-top: 44px;
   display: flex; /* Всё в одну строчку */
   align-items: center; /* Центрируем объекты */
   justify-content: space-between; /* Расставляем объекты с одинаковыми расстояниями между ними */
@@ -84,6 +85,15 @@ button {
   color: #595959;
   font-size: 16px;
   line-height: 24px;
+}
+
+.mini-button {
+  width: 50px;
+  position: fixed;
+  margin-top: auto;
+  z-index: 1;
+  left: 21px;
+  bottom: 130px;
 }
 
 /* Переопределяет стили элемента при наведении на него курсора мыши, но при этом элемент еще не активирован, иными словами кнопка мыши не нажата */

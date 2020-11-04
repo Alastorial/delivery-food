@@ -29,6 +29,9 @@ const mainFooter = document.querySelector('.footer');
 const emptyCart = document.querySelector('.emptyCart'); // Текст о пустой корзине
 const buy = document.querySelector('.button-buy'); // Кнопка оформить заказ
 const buttonCart = document.querySelector('.button-cart');
+let index = document.querySelector('.index');
+const miniCartButton = document.querySelector('.mini-button');
+
 
 
 
@@ -437,16 +440,18 @@ function updateCartPossitionsCount() {
   cartButton.innerHTML = ''
   if (cart.length) {
     cartButton.insertAdjacentHTML('beforeend', `
-      <span class="index">${cart.length}</span>
+    <span class="index">${cart.length}</span>
     <span class="button-cart-svg"></span>
     <span class="button-text">Корзина</span>
     `);
+    index.textContent = cart.length;
   } else {
     cartButton.insertAdjacentHTML('beforeend', `
     
       <span class="button-cart-svg"></span>
       <span class="button-text">Корзина</span>
-  `);
+    `);
+    index.textContent = ''
   }
 
   
@@ -487,8 +492,15 @@ function init(){
   openGoods();
 
   updateCartPossitionsCount();
+
   // При нажатии на корзину
   cartButton.addEventListener("click", function() {  
+    renderCart();
+    toggleModal();
+  });
+
+  // При нажатии на корзину
+  miniCartButton.addEventListener("click", function() {  
     renderCart();
     toggleModal();
   });
