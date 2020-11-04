@@ -97,6 +97,7 @@ function authorized() {
     localStorage.removeItem('cartTitleData'); // Ситим данные браузера о выбранной карточке, которую мы выбрали, но не авторизировались
     localStorage.removeItem('cartCostData');
     localStorage.removeItem('cartIdData');
+    updateButtonCartCount();
 
     checkAuth(); // Запускаем проверку авторизации
   }
@@ -109,6 +110,7 @@ function authorized() {
   buttonOut.style.display = 'flex'; // Показываем блок с кнопкой выхода
   cartButton.style.display = 'flex'
   buttonOut.addEventListener('click', logOut); // Отслеживаем событие нажатия на кнопку выхода
+  
 };
 
 
