@@ -8,6 +8,13 @@ body {
 }
 
 a,
+button,
+input,
+textarea {
+  outline: none; /* Отключаем обводку у кнопок итд */
+}
+
+a,
 button {
   cursor: pointer; /* превращаем курсор в указательный при наведении */
   color: inherit; /* означает то, что данное свойство свое значение будет принимать от значения соответствующего свойства родительского элемента */
@@ -73,7 +80,7 @@ button {
   border: 1px solid #d9d9d9;
   box-sizing: border-box;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.0015);
-  border-radius: 2px;
+  border-radius: 8px;
   color: #595959;
   font-size: 16px;
   line-height: 24px;
@@ -270,6 +277,11 @@ button {
   text-decoration: none; /* Отключаем подчеркивание ссылок итп */
 }
 
+fieldset {
+  border-radius: 8px;
+  background-color: #fff1b8;
+}
+
 .card-restaurant {
   cursor: pointer;
 }
@@ -463,7 +475,7 @@ button {
   max-width: 780px;
   width: 95%;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 12px;
   margin: auto;
   padding: 40px 45px;
 }
@@ -471,6 +483,7 @@ button {
 .modal-dialog-auth {
   width: auto;
   position: relative; /* Положение элемента устанавливается относительно его исходного места */
+  padding-bottom: 20px;
 }
 
 .label-auth {
@@ -522,6 +535,7 @@ button {
   justify-content: space-between;
   padding-bottom: 8px;
   border-bottom: 1px solid #d9d9d9;
+
   margin-bottom: 15px;
 }
 
@@ -589,12 +603,11 @@ button {
 }
 
 .modal-pricetag {
-  background: #262626;
-  border-radius: 5px;
-  color: #ffffff;
   padding: 15px 20px;
+  padding-left: 0px;
   font-size: 20px;
   line-height: 23px;
+  font-weight: bold;
 }
 
 @media (max-width: 1366px) {
@@ -858,9 +871,10 @@ button {
   .footer-link:not(:last-child) {
     margin-right: 0;
   }
+
   .modal-pricetag {
-    font-size: 14px;
-    line-height: 9px;
+    font-size: 16px;
+    line-height: 20px;
   }
 
   .food-name {
@@ -870,6 +884,6 @@ button {
 
   .food-price {
     margin-right: 5px;
-    font-size: 17px;
+    font-size: 16px;
   }
 }

@@ -24,25 +24,29 @@ const restaurantPrice = document.querySelector(".price"); // Блок с цен�
 const restaurantCategory = document.querySelector(".category"); // Блок с категорией                       ресторана
 const modalBody = document.querySelector('.modal-body'); // Окно с корзиной
 const modalPrice = document.querySelector('.modal-pricetag'); // Поле с финальной стоимостью
-const buttonClearCart = document.querySelector('.clear-cart'); // Кнопка очистки корзины
-const mainFooter = document.querySelector('.footer'); // Футер
+const buttonClearCart = document.querySelector('.clear-cart');
+const mainFooter = document.querySelector('.footer');
 const emptyCart = document.querySelector('.emptyCart'); // Текст о пустой корзине
 const buy = document.querySelector('.button-buy'); // Кнопка оформить заказ
 
 
 
-
+let card = null;
+let buttonAddToCart = null;
 
 
 // Кладем в login логин и базы браузера
 let login = localStorage.getItem('deliveryLogin');
 
+
 let cart = []
 
 
-if (JSON.parse(localStorage.getItem("cartData"))) {
+// Если в памяти браузера есть значение с данными корзины, то
+if (JSON.parse(localStorage.getItem("cartData"))) {  
   cart = JSON.parse(localStorage.getItem("cartData"));
 } 
+
 
 // Создаем функцию getData, которая принимает данные из бд
 const getData = async function(url) {
@@ -56,8 +60,6 @@ const getData = async function(url) {
   return await response.json(); // Выводим полученные данные, сначала выполнится json, а потом возврат
 };
 
-// getData('./db/partners.json'); // Получаем данные из partners.json
-
 
 
 
@@ -66,10 +68,16 @@ const toggleModal = function() {
   modal.classList.toggle("is-open");
 };
 
+
+
+
 // Функция открытия закрытия модального окна авторизации
 const toggleModalAuth = function() {
   modalAuth.classList.toggle("is-open");
 };
+
+
+
 
 // Функция обработки событий при авторизированном пользователе
 function authorized() {
@@ -86,12 +94,13 @@ function authorized() {
     buttonOut.removeEventListener('click', logOut); // Перестаем отслеживать нажатие кнопок
     localStorage.removeItem('cartData');
 
-    localStorage.removeItem('cartTitleData');
+    localStorage.removeItem('cartTitleData'); // Ситим данные браузера о выбранной карточке, которую мы выбрали, но не авторизировались
     localStorage.removeItem('cartCostData');
     localStorage.removeItem('cartIdData');
 
     checkAuth(); // Запускаем проверку авторизации
   }
+
 
   userName.textContent = login; // Передаем в поле с именем наш логин
 
@@ -102,6 +111,9 @@ function authorized() {
   buttonOut.addEventListener('click', logOut); // Отслеживаем событие нажатия на кнопку выхода
 };
 
+
+
+
 // Функция обработки событий при неавторизированном пользователе
 function notAuthorized() {
 
@@ -109,10 +121,10 @@ function notAuthorized() {
   function logIn (event) {
     event.preventDefault();  // Отключаем перезагрузку страницы
     login = loginInput.value.trim(); // Кладем в login логин, который ввели
-    if (login) {
-      
-      if (login) {  // == "Alastorial"
-        localStorage.setItem('deliveryLogin', login); // Сохраняем в браузере логин
+
+
+    if (login) { 
+      localStorage.setItem('deliveryLogin', login); // Сохраняем в браузере логин
 
       toggleModalAuth(); // Закрываем модальное окно
       buttonAuth.removeEventListener("click", toggleModalAuth); // Перестаем отслеживать нажатие кнопок
@@ -120,15 +132,37 @@ function notAuthorized() {
       logInForm.removeEventListener("submit", logIn);
       logInForm.reset(); // Чистим форму, удаляем вписанный логин/пароль
       checkAuth(); // Запускаем проверку авторизации
-      } else {
-        alert("Неверный логин разработчика")
+
+      // Если авторизация произошла после попытки закинуть что-то в корзину, то в cartTitleData будут лежать данные о выбранном блюде, которое мы в последствии добавим в корзину
+      if (localStorage.getItem("cartTitleData")) {
+        const title = card.querySelector('.card-title-reg').textContent; // Получаем название блюда
+        const cost = card.querySelector('.card-price').textContent; // Получаем цену блюда
+        const id = buttonAddToCart.id; // Получаем id карточки
+        
+
+        const food = cart.find(function(item){ // find ищет совпадение по какой-то функции
+          return item.id === id // Перебираем все элементы в cart и сравниваем их id с id выбранного блюда
+        }) // Возвращает совпавший элемент
+
+
+        if (food) {  // Если в food что-то есть, то прибавляем 1 к индексу количества данного блюда в корзине
+          food.count += 1
+        } else { // Иначе добавляем его
+            cart.push({
+              id: id,
+              title, // Тоже самое что и title: title, 
+              cost,
+              count: 1
+            });
+          };
+
+
+        localStorage.setItem("cartData", JSON.stringify(cart)); // Передаем в cartData нашу новую корзину
       }
       
     } else {
-      alert("Некорректно введен логин")
-    }
-
-    
+        alert("Некорректно введен логин");
+      }
   }
 
 
@@ -137,6 +171,9 @@ function notAuthorized() {
   logInForm.addEventListener("submit", logIn); // Отслеживаем отправку формы
 
 };
+
+
+
 
 // Функция проверки авторизации
 function checkAuth() {
@@ -147,81 +184,149 @@ function checkAuth() {
   }
 };
 
-// Функции создания карточек с ресторанами
-function createCardRestaurant(restaurant) {
-  // console.log(restaurant);
-
-  // Деструктуризация 
-  const { 
-    image,
-    kitchen,
-    name,
-    price,
-    stars,
-    products,
-    time_of_delivery: timeOfDelivery // Можем переименовать переменные 
-    } = restaurant; // Кладем в переменные данные из restaurant
-
-    // console.log(image)
-    // console.log(kitchen)
-    // console.log(name)
-    // console.log(price)
-    // console.log(stars)
-    // console.log(products)
-    // console.log(timeOfDelivery)
-
-  const card = `
-    <a class="card card-restaurant wow animate__animated animate__fadeInUp" data-products="${products}">
-      <img src="${image}" alt="image" class="card-image"/>
-      <div class="card-text">
-        <div class="card-heading">
-          <h3 class="card-title">${name}</h3>
-          <span class="card-tag tag">${timeOfDelivery} мин</span>
-        </div>
-        <!-- /.card-heading -->
-        <div class="card-info">
-          <div class="rating">
-            ${stars}
-          </div>
-          <div class="price">От ${price} ₽</div>
-          <div class="category">${kitchen}</div>
-        </div>
-        <!-- /.card-info -->
-      </div>
-      <!-- /.card-text -->
-    </a>
-  `;
-
-  cardsRestaurants.insertAdjacentHTML('afterbegin', card); // Вставляем HTML код в начало блока cardsRestaurants 
-
-
-};
 
 
 
-// Функция открытия ресторана
-function openGoods(event) {
-  const target = event.target; // Кладем в target элемент, по которому нажали
+// Функция создания карточек с едой
+function createCardFood({ description, image, name, price, id }) { // Второй метод деструктуризации
+  let count1 = ''
+  // console.log(description);
 
-
-  const restaurant = target.closest('.card-restaurant'); // Кладем в restaurant весь блок, к которому принадлежит target (ориентируемся по классу)
-  // Если нажали на область cardsRestaurants, но не попали по карточке, то метод closest не найдет блока с классом card-restaurant и вернет null
-
-  if (restaurant) { // Если в restaurant что-то есть, то
-
-    cardsMenu.textContent = ''; // Очищаем меню с едой
-    
-    localStorage.setItem('restaurantName', restaurant.querySelector('.card-title').textContent); // Сохраняем в браузере название ресторана
-    localStorage.setItem('restaurantRate', restaurant.querySelector('.rating').textContent); // Сохраняем в браузере рейтинг ресторана 
-    localStorage.setItem('restaurantPrice', restaurant.querySelector('.price').textContent); // Сохраняем в браузере мин цену ресторана
-    localStorage.setItem('restaurantCategory', restaurant.querySelector('.category').textContent); // Сохраняем в браузере категорию ресторана
-    localStorage.setItem('restaurantData', restaurant.dataset.products); // Сохраняем в браузере данные бд конкретного ресторана
-    
-
-    document.location.href = "restaurant.html"
-    
+  // Цикл, который показывает, сколько данных предметов лежит в корзине
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].title === name) {
+      count1 = cart[i].count;
+    };
   };
+
+  const card = document.createElement('div') // Создаем переменную card и превращаем ее в блок div
+  
+  card.className = 'card'; // Даем блоку в переменной card класс 'card'
+  card.insertAdjacentHTML('beforeend', `
+    <img src="${image}" alt="image" class="card-image"/>
+    <div class="card-text">
+      <div class="card-heading">
+        <h3 class="card-title card-title-reg">${name}</h3>
+      </div>
+      <div class="card-info">
+        <div class="ingredients">${description}
+        </div>
+      </div>
+      <div class="card-buttons">
+        <button class="button button-primary button-add-cart" id=${id}>
+          <span class="button-card-text">В корзину</span>
+          <span class="button-cart-svg"></span>
+          <span class="button-cart-сcounter">${count1}</span>
+        </button>
+        <strong class="card-price-bold card-price">${price}₽</strong>
+      </div>
+    </div>
+  `); // Добавляем HTML код в переменную card 
+
+  cardsMenu.insertAdjacentElement('beforeend', card) // Добавляем содержимое card на страницу в cardsMenu
 };
+
+
+
+
+// Функция загрузки ресторана
+const openGoods = function() {
+  
+  cardsMenu.textContent = ''; // Очищаем меню с едой
+  containerPromo.classList.add('hide'); // Убираем блок с промо
+  menu.classList.remove('hide'); // Показываем блок с едой
+
+  // Обновляем соответствующиек значения при переходе на страницу ресторана
+  restaurantName.textContent = localStorage.getItem('restaurantName');
+  restaurantRate.textContent = localStorage.getItem('restaurantRate');
+  restaurantPrice.textContent = localStorage.getItem('restaurantPrice');
+  restaurantCategory.textContent = localStorage.getItem('restaurantCategory');
+
+  
+  getData(`./db/${localStorage.getItem('restaurantData')}`).then(function(data){ // При получении данных активируем коллбек и выводим данные
+    data.forEach(createCardFood); // Для всех данных в бд активируем функцию создания еды
+    
+    //  console.log(data[0].name);
+    //  console.log(data);
+    //  console.log(restaurant);
+      
+    foot(); // Создаем футер
+    
+  }); // Получаем данные из partners.json
+    
+};
+
+
+
+
+// Функция добавления в корзину
+function addToCart(event) {
+
+  const target = event.target;
+
+  buttonAddToCart = target.closest('.button-add-cart'); // Кладем в buttonAddToCart код кнопки, если попали по ней
+
+  if (buttonAddToCart) { // Если попали по кнопке, то в переменной buttonAddToCart что-то есть и выполняется условие
+    
+    card = target.closest('.card'); // Получаем всю карточку
+    
+    if (login) {
+      
+      const title = card.querySelector('.card-title-reg').textContent; // Получаем название блюда
+      const cost = card.querySelector('.card-price').textContent; // Получаем цену блюда
+      const id = buttonAddToCart.id; // Получаем id карточки
+      
+
+      const food = cart.find(function(item){ // find ищет совпадение по какой-то функции
+        return item.id === id // Перебираем все элементы в cart и сравниваем их id с id выбранного блюда
+      }) // Возвращает совпавший элемент
+
+      buttonAddToCart.innerHTML = ''; // Очищаем блок
+
+      if (food) {  // Если в food что-то есть, то прибавляем 1 к индексу количества данного блюда в корзине
+        food.count += 1
+
+        // Обновляем счетчик рядом с кнопкой корзины
+        buttonAddToCart.insertAdjacentHTML('afterbegin', `
+          <span class="button-card-text">В корзину</span>
+          <span class="button-cart-svg"></span>
+          <span class="button-cart-сcounter">${food.count}</span>`)
+          
+      } else { // Иначе добавляем его
+          cart.push({
+          id: id,
+          title, // Тоже самое что и title: title, 
+          cost,
+          count: 1
+        });
+
+        // Обновляем счетчик рядом с кнопкой корзины
+        buttonAddToCart.insertAdjacentHTML('afterbegin', `
+          <span class="button-card-text">В корзину</span>
+          <span class="button-cart-svg"></span>
+          <span class="button-cart-сcounter">1</span>`)
+      };
+      
+      
+      
+
+
+      localStorage.setItem("cartData", JSON.stringify(cart));
+      
+
+    } else {
+        localStorage.setItem('cartTitleData', card.querySelector('.card-title-reg').textContent);
+        localStorage.setItem('cartCostData', card.querySelector('.card-price').textContent);
+        localStorage.setItem('cartIdData', buttonAddToCart.id);
+        toggleModalAuth();
+        
+      };
+
+  };
+  
+
+};
+
 
 
 
@@ -234,11 +339,10 @@ function renderCart() {
   } else {
     emptyCart.classList.add('hide');
   }
-  
+
   modalBody.textContent = ''; // Очищаем корзину перед созданием списка товаров
 
   cart.forEach(function({ id, title, cost, count }) { // Для всех элементов в cart формируем блок, деструктурируем
-    // console.log(cost);
     const itemCart = `
       <div class="food-row">
 					<span class="food-name">${title}</span>
@@ -261,8 +365,11 @@ function renderCart() {
   }, 0)
   // console.log(totalPrice);
 
-  modalPrice.textContent = totalPrice + "₽"; 
+  modalPrice.textContent = "Итого: " + totalPrice + "₽"; 
 };
+
+
+
 
 // Функция плюса и минуса в корзине
 function changeCount(event) {
@@ -287,6 +394,7 @@ function changeCount(event) {
     localStorage.setItem("cartData", JSON.stringify(cart)); // Обновление в памяти браузера значения корзины
 
     renderCart();
+    updateButtonCartCount();
 
 
   }
@@ -295,6 +403,39 @@ function changeCount(event) {
 
 };
 
+
+
+
+// Моя первая функция, которая отслеживает индексы рядом с кнопками "В корзину"
+function updateButtonCartCount() {
+  const cartCounter = document.querySelectorAll(".button-add-cart"); // Кладем все элементы с таким классом и перебираем
+  cartCounter.forEach(function(button) {
+    let index = 0; // Показывает, найдено ли совпадение
+    button.innerHTML = ''; // Очищаем блок, чтобы заполнить его заново
+
+    // Цикл, который показывает, сколько данных предметов лежит в корзине и 
+    for (let i = 0; i < cart.length; i++) { 
+      if (cart[i].id === button.id) { // Перебираем id элементов и при нахождении совпадения 
+        // вставляем количество таких элементов в корзине в кнопку
+        button.insertAdjacentHTML('afterbegin', `
+          <span class="button-card-text">В корзину</span>
+          <span class="button-cart-svg"></span>
+          <span class="button-cart-сcounter">${cart[i].count}</span>`)
+        index = 1;
+      };
+    };
+
+    if (index === 0) {
+      button.insertAdjacentHTML('afterbegin', `
+          <span class="button-card-text">В корзину</span>
+          <span class="button-cart-svg"></span>
+          <span class="button-cart-сcounter"></span>`)
+    }
+
+
+
+  })
+}
 
 
 
@@ -327,12 +468,10 @@ function foot() {
 }
 
 
+
 function init(){
-  // Получаем данные из partners.json и кладем в data
-  getData('./db/partners.json').then(function(data){ // При получении данных активируем коллбек и выводим данные
-    data.forEach(createCardRestaurant); // Для всех данных в бд активируем функцию создания ресторана
-    foot(); // Генерируем футер
-  });
+
+  openGoods();
 
 
   // При нажатии на корзину
@@ -341,11 +480,11 @@ function init(){
     toggleModal();
   });
 
-
   // При очистке корзины
   buttonClearCart.addEventListener("click", function() {
     cart.length = 0;
     localStorage.removeItem('cartData');
+    updateButtonCartCount();
     renderCart();
   })
 
@@ -354,24 +493,25 @@ function init(){
     alert("Прости, что дал тебе надежду..")
   });
 
+
   // При нажатии на модальном окне на плюс/минус
   modalBody.addEventListener("click", changeCount);
-
 
   // Закрыть модальное окно
   close.addEventListener("click", toggleModal);
 
+  
+  // При нажатии на карточку с едой на корзину
+  cardsMenu.addEventListener('click', addToCart);
 
-  // Запускаем отслеживание нажатия на карточку с рестораном и перехода на другую страницу
-  cardsRestaurants.addEventListener('click', openGoods); 
-  
-  
+  ////////////////////
   logo.addEventListener('click', function() {
     document.location.href = "index.html" 
   });
 
 
   checkAuth(); // Запускаем проверку авторизации
+
 
 
   new WOW().init();

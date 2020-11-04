@@ -1,33 +1,44 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-	<meta charset="UTF-8"/> <!--Указываем кодировку документа-->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!--означает что ширина страницы сайта устанавливается в соответствие ширине экрана устройства-->
-	<title>PizzaBurger — доставка еды на дом</title>
-	<link
-			href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic"
-			rel="stylesheet"
-	/>
-	<link rel="stylesheet" href="css/normalize.css"/>
-	<link rel="stylesheet" href="css/style.css"/>
+	<meta charset="UTF-8" />
+	<!--Указываем кодировку документа-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--означает что ширина страницы сайта устанавливается в соответствие ширине экрана устройства. initial-scale=1.0 — данный атрибут скажет браузеру установить соответствие масштаба 1:1 для пикселей, что означает не масштабировать-->
+	<title>Delivery Food — доставка еды на дом</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="stylesheet" />
+	<!--Подключаем шрифт-->
+	<link rel="stylesheet" href="css/normalize.css" />
+	<!--Отключаем отступы итд-->
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css"> бесплатный и наиболее современный мобильный сенсорный слайдер CSS3 с аппаратным ускорением переходов -->
 </head>
+
 <body>
 	<div class="container">
+		<!--Шапка-->
 		<header class="header">
-			<a href="index.html" class="logo">
-				<img src="img/icon/logo.svg" alt="Logo"/>
+			<a class="logo">
+				<img src="img/icon/logo.svg" alt="Logo" />
 			</a>
 			<label class="address">
-				<input type="text" class="input input-address" placeholder="Адрес доставки"/>
+				<input type="text" class="input input-address" placeholder="Адрес доставки" />
 			</label>
 			<div class="buttons">
+				<span class="user-name"></span>
 				<button class="button button-primary button-auth">
 					<span class="button-auth-svg"></span>
 					<span class="button-text">Войти</span>
 				</button>
-				<button class="button" id="cart-button">
+				<button class="button button-cart" id="cart-button">
 					<span class="button-cart-svg"></span>
 					<span class="button-text">Корзина</span>
+				</button>
+				<button class="button button-primary button-out">
+					<span class="button-text">Выйти</span>
+					<span class="button-out-svg"></span>
 				</button>
 			</div>
 		</header>
@@ -35,9 +46,26 @@
 	<!-- /.container  -->
 
 	<main class="main">
+		<!--Содержимое-->
 		<div class="container">
+
+			<section class="container-promo">
+				<section class="promo pizza">
+					<!--Наполнение промо-->
+					<h1 class="promo-title">Онлайн-сервис <br />доставки еды на дом</h1>
+					<p class="promo-text">
+						Блюда из любимого ресторана привезет курьер в перчатках, маске и с антисептиком
+					</p>
+				</section>
+		
+			</section>
+
+			
+
 			<section class="menu">
+				<!--Скрытая страница ресторана Пицца Плюс-->
 				<div class="section-heading">
+					<!--Название ресторана с информацией-->
 					<h2 class="section-title restaurant-title">Пицца Плюс</h2>
 					<div class="card-info">
 						<div class="rating">
@@ -48,184 +76,25 @@
 					</div>
 					<!-- /.card-info -->
 				</div>
+
 				<div class="cards cards-menu">
-					<div class="card">
-						<img src="img/pizza-plus/pizza-vesuvius.jpg" alt="image" class="card-image"/>
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Пицца Везувий</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатный, сыр «Моцарелла», ветчина, пепперони, перец
-								                         «Халапенье», соус «Тобаско», томаты.
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">В корзину</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">545 ₽</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
+					<!--Карточки с пиццами-->
 
-					<div class="card">
-						<img src="img/pizza-plus/pizza-girls.jpg" alt="image" class="card-image"/>
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Пицца Девичник</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатный, постное тесто, нежирный сыр, кукуруза, лук, маслины,
-								                         грибы, помидоры, болгарский перец.
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">В корзину</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">450 ₽</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-oleole.jpg" alt="image" class="card-image"/>
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Пицца Оле-Оле</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатный, сыр «Моцарелла», черри, маслины, зелень, майонез
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">В корзину</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">440 ₽</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-plus.jpg" alt="image" class="card-image"/>
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Пицца Плюс</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатный, сыр «Моцарелла», сыр «Чеддер», томаты, пепперони,
-								                         телятина, грибы, бекон, болгарский перец.
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">В корзину</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">805 ₽</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-hawaiian.jpg" alt="image" class="card-image"/>
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Пицца Гавайская</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатный, сыр «Моцарелла», ветчина, ананасы</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">В корзину</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">440 ₽</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
-
-					<div class="card">
-						<img src="img/pizza-plus/pizza-classic.jpg" alt="image" class="card-image"/>
-						<div class="card-text">
-							<div class="card-heading">
-								<h3 class="card-title card-title-reg">Пицца Классика</h3>
-							</div>
-							<!-- /.card-heading -->
-							<div class="card-info">
-								<div class="ingredients">Соус томатный, сыр «Моцарелла», сыр «Пармезан», ветчина, салями,
-								                         грибы.
-								</div>
-							</div>
-							<!-- /.card-info -->
-							<div class="card-buttons">
-								<button class="button button-primary button-add-cart">
-									<span class="button-card-text">В корзину</span>
-									<span class="button-cart-svg"></span>
-								</button>
-								<strong class="card-price-bold">510 ₽</strong>
-							</div>
-						</div>
-						<!-- /.card-text -->
-					</div>
-					<!-- /.card -->
 				</div>
 				<!-- /.cards -->
 			</section>
+
 		</div>
 		<!-- /.container -->
 	</main>
 
+	<!--Подвал-->
 	<footer class="footer">
-		<div class="container">
-			<div class="footer-block">
-				<a href="index.html" class="logo">
-					<img src="img/icon/logo.svg" alt="logo" class="logo footer-logo" />
-				</a>
-				
-				<nav class="footer-nav">
-					<a href="#" class="footer-link">Ресторанам </a>
-					<a href="#" class="footer-link">Курьерам</a>
-					<a href="#" class="footer-link">Пресс-центр</a>
-					<a href="#" class="footer-link">Контакты</a>
-				</nav>
-				<div class="social-links">
-					<a href="#" class="social-link"><img src="img/social/instagram.svg" alt="instagram"/></a>
-					<a href="#" class="social-link"><img src="img/social/fb.svg" alt="facebook"/></a>
-					<a href="#" class="social-link"><img src="img/social/vk.svg" alt="vk"/></a>
-				</div>
-				<!-- /.social-links -->
-			</div>
-			<!-- /.footer-block -->
-		</div>
+		
 	</footer>
 
+
+	<!--Модальное окно-->
 	<div class="modal modal-cart">
 		<div class="modal-dialog">
 			<div class="modal-header">
@@ -233,54 +102,25 @@
 				<button class="close">&times;</button>
 			</div>
 			<!-- /.modal-header -->
+			<span class="emptyCart hide" style="font-size: 23px;">В Вашей корзине пусто</span>
+
+			<hr color="#d9d9d9" size="1">
 			<div class="modal-body">
-				<div class="food-row">
-					<span class="food-name">Ролл угорь стандарт</span>
-					<strong class="food-price">250 ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Ролл угорь стандарт</span>
-					<strong class="food-price">250 ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Ролл угорь стандарт</span>
-					<strong class="food-price">250 ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Ролл угорь стандарт</span>
-					<strong class="food-price">250 ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
+				
+
 				<!-- /.foods-row -->
 			</div>
 			<!-- /.modal-body -->
 			<div class="modal-footer">
-				<span class="modal-pricetag">1250 ₽</span>
+				<div class="" style="padding-right: 30px;">
+					<span class="modal-pricetag"></span>
+					
+					<hr color="black" size="1" width="90%" align="left">
+				</div>
+				
 				<div class="footer-buttons">
-					<button class="button button-primary">Оформить заказ</button>
-					<button class="button clear-cart">Отмена</button>
+					<button class="button button-primary button-buy">Оформить заказ</button>
+					<button class="button clear-cart">Очистить</button>
 				</div>
 			</div>
 			<!-- /.modal-footer -->
@@ -288,7 +128,39 @@
 		<!-- /.modal-dialog -->
 	</div>
 
+	<!--Окно авторизации-->
+	<div class="modal-auth">
+		<div class="modal-dialog modal-dialog-auth">
+			<button class="close-auth">&times;</button>
+			<form id="logInForm">
+				<fieldset class="modal-body">
+					<span class="modal-title">Авторизация</span>
+					<label class="label-auth">
+						<span>Логин</span>
+						<input id="login" type="text">
+					</label>
+					<label class="label-auth">
+						<span>Пароль</span>
+						<input id="password" type="password">
+					</label>
+				</fieldset>
+				<!-- /.modal-body -->
+				<div class="modal-footer">
+					<div class="footer-buttons">
+						<button class="button button-primary button-login" type="submit">Войти</button>
+					</div>
+				</div>
+			</form>
+			<!-- /.modal-footer -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- <script src="https://unpkg.com/swiper/js/swiper.min.js"></script> -->
+	<script src="js/wow.min.js"></script>
+	<script src="js/cart.js"></script>
+	<script src="js/main2.js"></script>
 
-	<script src="js/main.js"></script>
+
 </body>
+
 </html>

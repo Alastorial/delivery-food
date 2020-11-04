@@ -51,25 +51,7 @@
 						Блюда из любимого ресторана привезет курьер в перчатках, маске и с антисептиком
 					</p>
 				</section>
-				<!-- <section class="promo kebab">
-									<h1 class="promo-title">Шашлыки на майские <br> со скидкой 35%</h1>
-									<p class="promo-text">
-										Закажите шашлыки в любом ресторане до 10 мая и получите скидку по промокоду OMAGAD
-									</p>
-								</section>
-								<section class="promo vegetables">
-									<h1 class="promo-title">Скидка 20% на всю еду <br> по промокоду LOVE.JS</h1>
-									<p class="promo-text">
-										Блюдо из ресторана привезут вместе с двумя подарочными книгами по фронтенду
-									</p>
-								</section>
-								<section class="promo sushi">
-									<h1 class="promo-title">Сеты со скидкой до 30% <br> в ресторанах</h1>
-									<p class="promo-text">
-										Скидки на сеты до 30 мая по промокоду DADADA
-									</p>
-								</section> 
-							</section> -->
+				
 			</section>
 
 			<section class="restaurants"> <!--Блок с ресторанами-->
@@ -112,7 +94,7 @@
 
 	<!--Подвал-->
 	<footer class="footer">
-		<div class="container">
+		<!-- <div class="container">
 			<div class="footer-block">
 				<a href="index.html" class="logo">
 					<img src="img/icon/logo.svg" alt="logo" class="logo footer-logo wow animate__animated animate__fadeInLeft" />
@@ -128,10 +110,10 @@
 					<a href="#" class="social-link"><img src="img/social/fb.svg" alt="facebook"/></a>
 					<a href="#" class="social-link"><img src="img/social/vk.svg" alt="vk"/></a>
 				</div>
-				<!-- /.social-links -->
+				/.social-links
 			</div>
-			<!-- /.footer-block -->
-		</div>
+			/.footer-block
+		</div> -->
 	</footer>
 
 
@@ -143,15 +125,22 @@
 				<button class="close">&times;</button>
 			</div>
 			<!-- /.modal-header -->
+			<span class="emptyCart hide" style="font-size: 23px;">В Вашей корзине пусто</span>
+			<hr color="#d9d9d9" size="1">
 			<div class="modal-body" >
+				
 				
 				<!-- /.foods-row -->
 			</div>
 			<!-- /.modal-body -->
 			<div class="modal-footer">
-				<span class="modal-pricetag"></span>
+				<div class="" style="padding-right: 30px;">
+					<span class="modal-pricetag"></span>
+				
+					<hr color="black" size="1" width="90%" align="left">
+				</div>
 				<div class="footer-buttons">
-					<button class="button button-primary">Оформить заказ</button>
+					<button class="button button-primary button-buy">Оформить заказ</button>
 					<button class="button clear-cart">Очистить</button>
 				</div>
 			</div>
@@ -166,7 +155,7 @@
 			<button class="close-auth">&times;</button>
 			<form id="logInForm">
 				<fieldset class="modal-body">
-					<legend class="modal-title">Авторизация</legend>
+					<span class="modal-title">Авторизация</span>
 					<label class="label-auth">
 						<span>Логин</span>
 						<input id="login" type="text">
@@ -189,7 +178,9 @@
 	</div>
 	<!-- <script src="https://unpkg.com/swiper/js/swiper.min.js"></script> -->
 	<script src="js/wow.min.js"></script>
+	<script src="js/cart.js"></script>
 	<script src="js/main.js"></script>
+	
 
 </body>
 
