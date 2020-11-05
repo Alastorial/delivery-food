@@ -98,11 +98,13 @@ function authorized() {
     buttonOut.removeEventListener('click', logOut); // Перестаем отслеживать нажатие кнопок
     localStorage.removeItem('cartData');
 
-    localStorage.removeItem('cartTitleData'); // Ситим данные браузера о выбранной карточке, которую мы выбрали, но не авторизировались
+    localStorage.removeItem('cartTitleData'); // Чистим данные браузера о выбранной карточке, которую мы выбрали, но не авторизировались
     localStorage.removeItem('cartCostData');
     localStorage.removeItem('cartIdData');
-    updateButtonCartCount();
-    updateCartPossitionsCount();
+
+    checkForMiniCart();  // Проверка, необходима ли кнопка минимагаза
+    updateButtonCartCount();  // Перебор всех карточек с блюдами на странице и присваивание новых текстовых индексов (в данном случае их не будет ибо корзина почистилась)
+    updateCartPossitionsCount();  // Присваивание нового индекса рядом с корзиной и миникнопкой
 
     checkAuth(); // Запускаем проверку авторизации
   }
@@ -127,7 +129,7 @@ function notAuthorized() {
   // Функция запускающаяся при попытке авторизироваться
   function logIn (event) {
     event.preventDefault();  // Отключаем перезагрузку страницы
-    login = loginInput.value.trim(); // Кладем в login логин, который ввели
+    login = loginInput.value.trim(); // Кладем в login логин, который ввели, отрезаем пробелы
 
 
     if (login) { 
@@ -162,9 +164,10 @@ function notAuthorized() {
               count: 1
             });
           };
-
-        updateButtonCartCount();
-        updateCartPossitionsCount();
+        
+        checkForMiniCart()
+        updateButtonCartCount();  // Обновляем количество рядом с кнопками в корзину
+        updateCartPossitionsCount(); // Обновляем количество рядом с кнопкой корзина
 
         localStorage.setItem("cartData", JSON.stringify(cart)); // Передаем в cartData нашу новую корзину
       }
@@ -240,9 +243,7 @@ function createCardFood({ description, image, name, price, id }) { // Второ
 
 // Функция загрузки ресторана
 const openGoods = function() {
-  cardsMenu.textContent = ''; // Очищаем меню с едой
-  containerPromo.classList.add('hide'); // Убираем блок с промо
-  menu.classList.remove('hide'); // Показываем блок с едой
+  
 
   // Обновляем соответствующиек значения при переходе на страницу ресторана
   restaurantName.textContent = localStorage.getItem('restaurantName');
@@ -254,9 +255,6 @@ const openGoods = function() {
   getData(`./db/${localStorage.getItem('restaurantData')}`).then(function(data){ // При получении данных активируем коллбек и выводим данные
     data.forEach(createCardFood); // Для всех данных в бд активируем функцию создания еды
     
-    //  console.log(data[0].name);
-    //  console.log(data);
-    //  console.log(restaurant);
       
     foot(); // Создаем футер
     
@@ -280,6 +278,7 @@ function addToCart(event) {
     
     if (login) {
       
+
       const title = card.querySelector('.card-title-reg').textContent; // Получаем название блюда
       const cost = card.querySelector('.card-price').textContent; // Получаем цену блюда
       const id = buttonAddToCart.id; // Получаем id карточки
@@ -304,11 +303,14 @@ function addToCart(event) {
         
       };
       
+      checkForMiniCart();
+
       updateButtonCartCount(); // Обновляем счетчик рядом с кнопкой корзины блюда
 
       updateCartPossitionsCount(); // Обновляем счетчик рядом с кнопкой корзины шапки
 
       localStorage.setItem("cartData", JSON.stringify(cart));
+      
       
 
     } else { // Иначе кладем в браузер данные выбранной карточки и запускаем авторизацию
@@ -389,10 +391,10 @@ function changeCount(event) {
 
     localStorage.setItem("cartData", JSON.stringify(cart)); // Обновление в памяти браузера значения корзины
 
-    renderCart();
-    updateButtonCartCount();
-    updateCartPossitionsCount();
-
+    renderCart(); // Обновляем все в корзине
+    updateButtonCartCount(); // Обновляем индексы с кнопки В КОРЗИНУ
+    updateCartPossitionsCount(); // Обновляем индекс рядом с корзиной
+    checkForMiniCart();
 
   }
 
@@ -435,7 +437,7 @@ function updateButtonCartCount() {
 };
 
 
-// Моя вторая функция, которая отслеживает и обновляет индекс рядом с кнопкой "В корзину" у шапки
+// Моя вторая функция, которая отслеживает и обновляет индекс рядом с кнопкой "В корзину" у шапки и миникнопки
 function updateCartPossitionsCount() {
   cartButton.innerHTML = ''
   if (cart.length) {
@@ -456,6 +458,19 @@ function updateCartPossitionsCount() {
 
   
 };
+
+
+
+// Функция, которая проверяет, стоит ли выдвигать мини кнопку корзины
+function checkForMiniCart() {
+  console.log(132123);
+  if (cart.length > 0) {
+    miniCartButton.style.display = "flex";
+  } else {
+    miniCartButton.style.display = "none";
+  };
+};
+
 
 
 // Функция генерации футера
@@ -489,9 +504,9 @@ function foot() {
 
 function init(){
 
-  openGoods();
-
-  updateCartPossitionsCount();
+  openGoods(); // Генерация магаза
+  checkForMiniCart(); // Проверка, выпускать ли доп кнопку корзины
+  updateCartPossitionsCount(); // Обновляем число рядом с корзиной
 
   // При нажатии на корзину
   cartButton.addEventListener("click", function() {  
@@ -511,6 +526,7 @@ function init(){
     localStorage.removeItem('cartData');
     updateButtonCartCount();
     updateCartPossitionsCount();
+    checkForMiniCart()
     renderCart();
   })
 

@@ -91,6 +91,8 @@ function authorized() {
     localStorage.removeItem('cartTitleData');
     localStorage.removeItem('cartCostData');
     localStorage.removeItem('cartIdData');
+
+    checkForMiniCart();
     updateCartPossitionsCount();
 
 
@@ -290,6 +292,8 @@ function changeCount(event) {
 
     updateCartPossitionsCount();
 
+    checkForMiniCart()
+
     localStorage.setItem("cartData", JSON.stringify(cart)); // Обновление в памяти браузера значения корзины
 
     renderCart();
@@ -304,7 +308,7 @@ function changeCount(event) {
 
 
 
-// Моя вторая функция, которая отслеживает и обновляет индекс рядом с кнопкой "В корзину" у шапки
+// Моя вторая функция, которая отслеживает и обновляет индекс рядом с кнопкой "Корзина" у шапки и миникнопки
 function updateCartPossitionsCount() {
   cartButton.innerHTML = ''
   if (cart.length) {
@@ -324,6 +328,18 @@ function updateCartPossitionsCount() {
   }
 
   
+};
+
+
+
+// Функция, которая проверяет, стоит ли выдвигать доп кнопку корзины
+function checkForMiniCart() {
+  console.log(132123);
+  if (cart.length > 0) {
+    miniCartButton.style.display = "flex";
+  } else {
+    miniCartButton.style.display = "none";
+  };
 };
 
 
@@ -366,6 +382,7 @@ function init(){
 
 
   updateCartPossitionsCount();
+  checkForMiniCart();
 
   // При нажатии на корзину
   cartButton.addEventListener("click", function() {  
@@ -385,6 +402,7 @@ function init(){
     localStorage.removeItem('cartData');
     renderCart();
     updateCartPossitionsCount();
+    checkForMiniCart()
   })
 
   // При попытке заказать
