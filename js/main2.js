@@ -255,7 +255,7 @@ const openGoods = function() {
   getData(`./db/${localStorage.getItem('restaurantData')}`).then(function(data){ // При получении данных активируем коллбек и выводим данные
     data.forEach(createCardFood); // Для всех данных в бд активируем функцию создания еды
     
-      
+    updateButtonCartCount(); // Перебор всех карточек с блюдами на странице и присваивание новых текстовых индексов
     foot(); // Создаем футер
     
   }); // Получаем данные из partners.json
@@ -421,6 +421,7 @@ function updateButtonCartCount() {
           <span class="button-cart-svg"></span>
           <span class="button-cart-сcounter">${cart[i].count}</span>`)
         index = 1;
+        button.style.background = "#0ec645";
       };
     };
 
@@ -429,7 +430,8 @@ function updateButtonCartCount() {
           <span class="button-card-text">В корзину</span>
           <span class="button-cart-svg"></span>
           <span class="button-cart-сcounter"></span>`)
-    }
+      button.style.background = "#1890ff";
+    };
 
 
 
@@ -507,6 +509,7 @@ function init(){
   openGoods(); // Генерация магаза
   checkForMiniCart(); // Проверка, выпускать ли доп кнопку корзины
   updateCartPossitionsCount(); // Обновляем число рядом с корзиной
+  
 
   // При нажатии на корзину
   cartButton.addEventListener("click", function() {  
@@ -554,7 +557,7 @@ function init(){
 
   checkAuth(); // Запускаем проверку авторизации
 
-
+  
 
   new WOW().init();
 };

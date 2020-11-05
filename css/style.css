@@ -1,5 +1,5 @@
 * {
-  touch-action: manipulation;
+  touch-action: manipulation; /* Отключение двойного касания */
   box-sizing: border-box; /* изменяет режим расчета размеров элемента, при котором, например, свойство width задает не ширину содержимого, а ширину всего элемента, включая внутренние отступы и границы */
 }
 
@@ -66,6 +66,10 @@ button {
 .input-search {
   width: 300px; /* Ширина поисковой строки */
   background-image: url(../img/icon/search.svg);
+}
+
+.button-add-cart:hover {
+  color: #fff;
 }
 
 .buttons {
