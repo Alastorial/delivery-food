@@ -421,7 +421,7 @@ function updateButtonCartCount() {
           <span class="button-cart-svg"></span>
           <span class="button-cart-сcounter">${cart[i].count}</span>`)
         index = 1;
-        button.style.background = "#0ec645";
+        // button.style.background = "#0ec645";
       };
     };
 
@@ -430,7 +430,7 @@ function updateButtonCartCount() {
           <span class="button-card-text">В корзину</span>
           <span class="button-cart-svg"></span>
           <span class="button-cart-сcounter"></span>`)
-      button.style.background = "#1890ff";
+      // button.style.background = "#1890ff";
     };
 
 

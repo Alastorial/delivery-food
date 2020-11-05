@@ -68,10 +68,6 @@ button {
   background-image: url(../img/icon/search.svg);
 }
 
-.button-add-cart:hover {
-  color: #fff;
-}
-
 .buttons {
   display: flex;
   align-items: center;
